@@ -2,6 +2,7 @@ package com.example.enoca_javac.service;
 
 import com.example.enoca_javac.dto.ProductDTO;
 import com.example.enoca_javac.entity.Product;
+import com.example.enoca_javac.exception.ResourceNotFoundException;
 import com.example.enoca_javac.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class ProductService {
     };
 
     public Product updateProduct(long productId, ProductDTO productDTO){
-        Product product = productRepository.findById(productId);
-         //Exception eklenecek
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ürün bulunamadı"));
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setStockQuantity(productDTO.getStockQuantity());
