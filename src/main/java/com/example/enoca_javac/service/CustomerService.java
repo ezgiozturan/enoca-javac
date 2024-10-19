@@ -3,6 +3,7 @@ package com.example.enoca_javac.service;
 import com.example.enoca_javac.dto.CustomerDTO;
 import com.example.enoca_javac.entity.Customer;
 import com.example.enoca_javac.entity.Order;
+import com.example.enoca_javac.exception.ResourceNotFoundException;
 import com.example.enoca_javac.repository.CustomerRepository;
 import com.example.enoca_javac.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CustomerService {
     };
 
     public List<Order> getAllOrdersForCustomer(long customerId){
-        Optional<Customer> customer =customerRepository.findById(customerId);
-        return customer.get().getOrders();
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
     };
 }
