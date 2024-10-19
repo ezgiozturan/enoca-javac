@@ -14,7 +14,7 @@ public class Product extends BaseEntity {
     private double price;
     private int stockQuantity;
 
-    private boolean isAvailable(){
+    public boolean isAvailable(){
        return this.stockQuantity>0;
     }
 
