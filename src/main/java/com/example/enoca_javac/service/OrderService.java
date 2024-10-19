@@ -2,6 +2,7 @@ package com.example.enoca_javac.service;
 
 import com.example.enoca_javac.entity.Cart;
 import com.example.enoca_javac.entity.Order;
+import com.example.enoca_javac.exception.ResourceNotFoundException;
 import com.example.enoca_javac.repository.CartRepository;
 import com.example.enoca_javac.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ public class OrderService {
 
     public Order placeOrder(long customerId){
 
-        Cart cart = cartRepository.findByCustomerId(customerId);
-               //EXCEPTİON
+        Cart cart = cartRepository.findByCustomerId(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Sepet bulunamadı"));
 
         if (cart.getProducts().isEmpty()) {
-            //EXCEPTİON
+            throw new IllegalStateException("Sepet boş, sipariş verilemiyor");
         }
 
         Order order = new Order();
@@ -38,8 +39,8 @@ public class OrderService {
     };
 
     public Order getOrderForCode(String orderCode){
-        return orderRepository.findByOrderCode(orderCode);
-           //exception
+        return orderRepository.findByOrderCode(orderCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Sipariş bulunamadı"));
 
 
     };
