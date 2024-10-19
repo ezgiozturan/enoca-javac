@@ -31,5 +31,7 @@ public class CustomerService {
     public List<Order> getAllOrdersForCustomer(long customerId){
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+        return customer.getOrders();
     };
+
 }
