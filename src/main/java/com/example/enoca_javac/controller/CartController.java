@@ -5,10 +5,7 @@ import com.example.enoca_javac.entity.Cart;
 import com.example.enoca_javac.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 public class CartController {
 
@@ -23,10 +20,15 @@ public class CartController {
 
 
     @PutMapping("/{cartId}")
-    public ResponseEntity<Cart> updateCart(@PathVariable Long cartId, @RequestBody CartDTO cartDTO) {
+    public ResponseEntity<Cart> updateCart(@PathVariable long cartId, @RequestBody CartDTO cartDTO) {
         Cart updatedCart = cartService.updateCart(cartId, cartDTO);
         return ResponseEntity.ok(updatedCart);
     }
 
+    @DeleteMapping("/{cartId}/empty")
+    public ResponseEntity<Cart> emptyCart(@PathVariable long cartId) {
+        Cart cart = cartService.emptyCart(cartId);
+        return ResponseEntity.ok(cart);
+    }
 
 }
