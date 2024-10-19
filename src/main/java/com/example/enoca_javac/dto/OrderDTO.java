@@ -8,7 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderDTO {
-    private Long id;
-    private List<ProductDTO> products;
+    private long id;
+    private long customerId;
+    private List<PreviousOrderDTO> previousOrderDTOS;
     private double totalPrice;
 }
